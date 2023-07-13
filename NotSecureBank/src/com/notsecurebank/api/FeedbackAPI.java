@@ -18,6 +18,8 @@ import com.notsecurebank.model.Feedback;
 import com.notsecurebank.util.OperationsUtil;
 import com.notsecurebank.util.ServletUtil;
 
+import org.owasp.esapi.ESAPI;
+
 @Path("/feedback")
 public class FeedbackAPI extends NotSecureBankAPI {
 
@@ -45,10 +47,18 @@ public class FeedbackAPI extends NotSecureBankAPI {
         String comments;
 
         try {
-            name = (String) myJson.get("name");
-            email = (String) myJson.get("email");
-            subject = (String) myJson.get("subject");
-            comments = (String) myJson.get("message");
+        	// a library has been used to sanitize the input
+        	name = (String) myJson.get("name");
+        	name = ESAPI.encoder().encodeForHTML(name);
+        	
+        	email = (String) myJson.get("email");
+        	email = ESAPI.encoder().encodeForHTML(email);
+        	
+        	subject = (String) myJson.get("subject");
+        	subject = ESAPI.encoder().encodeForHTML(subject);
+        	
+        	comments = (String) myJson.get("message");
+        	comments = ESAPI.encoder().encodeForHTML(comments);
         } catch (JSONException e) {
             LOG.error(e.toString());
             return Response.status(400).entity("{\"Error\": \"Body does not contain all the correct attributes\"}").build();
