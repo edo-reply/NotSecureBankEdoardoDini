@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.notsecurebank.util.DBUtil;
 import com.notsecurebank.util.ServletUtil;
 
 public class SubscribeServlet extends HttpServlet {
@@ -31,12 +30,14 @@ public class SubscribeServlet extends HttpServlet {
         String messageSubscribe = null;
         try {
 
-            String registeredUser = DBUtil.addSubscription(email);
-            if (registeredUser == null) {
-                messageSubscribe = "Thank you. Your email <em>" + email + "</em> has been accepted. You are not registered yet. Please <a href='locations.jsp'>search</a> for the Branch Office closest to you and ask them for an account.";
-            } else {
-                messageSubscribe = "Hello <em>" + registeredUser + "</em>! Your email <em>" + email + "</em> has been accepted. Please <a href='login.jsp'>sign in</a> to use our advanced banking features.";
-            }
+        	messageSubscribe = "Thank you. Your email <em>" + email + "</em> has been accepted.";
+//			having two different behaviors depending on user registration it's possible to enumerate the registered users
+//        	String registeredUser = DBUtil.addSubscription(email);
+//          if (registeredUser == null) {
+//              messageSubscribe = "Thank you. Your email <em>" + email + "</em> has been accepted. You are not registered yet. Please <a href='locations.jsp'>search</a> for the Branch Office closest to you and ask them for an account.";
+//          } else {
+//              messageSubscribe = "Hello <em>" + registeredUser + "</em>! Your email <em>" + email + "</em> has been accepted. Please <a href='login.jsp'>sign in</a> to use our advanced banking features.";
+//          }
 
         } catch (Exception e) {
             messageSubscribe = "Unexpected error.";
