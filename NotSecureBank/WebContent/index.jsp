@@ -18,11 +18,12 @@
 			content = request.getParameter("content");
 			content = "static/"+content;
 		%>
-		
-		<%  try { %>
-			<jsp:include page="<%= content %>"/>
-		<%  } catch (Exception e) { %>
-			<p>Failed due to <%= ServletUtil.sanitizeHtmlWithRegex(e.getLocalizedMessage()) %></p>
+		<%-- Added the check of the content  --%>
+ 		<% try { 
+ 			content = ServletUtil.sanitizeHtmlWithRegex(content); %>
+ 			<jsp:include page="<%= content %>"/>
+ 		<% } catch (Exception e) { %> 
+ 			<p>Failed due to <%= ServletUtil.sanitizeHtmlWithRegex(e.getLocalizedMessage()) %></p>
  		<% } %>
     </td>
 	
