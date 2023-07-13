@@ -48,6 +48,7 @@ public class FeedbackAPI extends NotSecureBankAPI {
 
         try {
         	// a library has been used to sanitize the input
+        	// V7: the input has been already sanitized so the vulnerability is not present anymore
         	name = (String) myJson.get("name");
         	name = ESAPI.encoder().encodeForHTML(name);
         	
