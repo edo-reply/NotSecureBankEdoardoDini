@@ -31,6 +31,7 @@ public class ServletUtil {
     public static final String SESSION_ATTR_USER = "user";
     public static final String SESSION_ATTR_ADMIN_VALUE = "notsecurebankadmin";
     public static final String SESSION_ATTR_ADMIN_KEY = "admin";
+    private static final String SESSION_ATTR_GOLDVISA = "goldVisaApproved";
 
     public static HashMap<String, String> demoProperties = null;
     public static File logFile = null;
@@ -266,16 +267,20 @@ public class ServletUtil {
     public static boolean isPreApprovedForGoldVisa(HttpServletRequest request) {
         LOG.debug("isPreApprovedForGoldVisa");
 
-        boolean isPreApprovedForGoldVisa = false;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length > 0) {
-            for (Cookie c : cookies) {
-                if ("preApprovedForGoldVisa".equals(c.getName()) && "true".equals(c.getValue())) {
-                    isPreApprovedForGoldVisa = true;
-                    break;
-                }
-            }
-        }
+//		  unsecure code
+//        boolean isPreApprovedForGoldVisa = false;
+//        Cookie[] cookies = request.getCookies();
+//        if (cookies != null && cookies.length > 0) {
+//            for (Cookie c : cookies) {
+//                if ("preApprovedForGoldVisa".equals(c.getName()) && "true".equals(c.getValue())) {
+//                    isPreApprovedForGoldVisa = true;
+//                    break;
+//                }
+//            }
+//        }
+
+        // this session attribute at the moment does not exist, it should be created an set
+        boolean isPreApprovedForGoldVisa = (boolean) request.getSession().getAttribute(ServletUtil.SESSION_ATTR_GOLDVISA);
 
         LOG.info("Is pre-approved for Gold Visa? " + isPreApprovedForGoldVisa);
         return isPreApprovedForGoldVisa;
