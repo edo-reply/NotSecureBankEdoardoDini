@@ -238,6 +238,25 @@ public class ServletUtil {
         LOG.info("True.");
         return true;
     }
+    
+    // added a method to check if the admin is logged in addition to the method that check if a user is logged
+	static public boolean isAdminLoggedin(HttpServletRequest request) {
+		LOG.info("Is Admin user logged?");
+		try {
+			// Check if an admin is logged
+			String adminValue = (String) request.getSession().getAttribute(ServletUtil.SESSION_ATTR_ADMIN_KEY);
+			if (adminValue != ServletUtil.SESSION_ATTR_ADMIN_VALUE) {
+				LOG.info("False.");
+				return false;
+			}
+		} catch (Exception e) {
+			LOG.error(e.toString());
+			LOG.info("False.");
+			return false;
+		}
+		LOG.info("True.");
+		return true;
+	}
 
     static public User getUser(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute(ServletUtil.SESSION_ATTR_USER);
