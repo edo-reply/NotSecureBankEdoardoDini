@@ -439,8 +439,13 @@ public class DBUtil {
 
         try {
             Connection connection = getConnection();
-            Statement statement = connection.createStatement();
-            statement.execute("INSERT INTO ACCOUNTS (USERID,ACCOUNT_NAME,BALANCE) VALUES ('" + username + "','" + acctType + "', 0)");
+            // Wrong Code: input should be validated, strings concatenation is dangerous
+            // Statement statement = connection.createStatement();
+            // statement.execute("INSERT INTO ACCOUNTS (USERID,ACCOUNT_NAME,BALANCE) VALUES ('" + username + "','" + acctType + "', 0)");
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO ACCOUNTS (USERID,ACCOUNT_NAME,BALANCE) VALUES (?, ?, 0)");
+            statement.setString(1, username);
+            statement.setString(2, acctType);
+            statement.execute();
             return null;
         } catch (SQLException e) {
             LOG.error(e.toString());
